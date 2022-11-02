@@ -1,0 +1,13 @@
+providers:
+  docker:
+    swarmMode: true
+    endpoint: "tcp://docker-proxy:2375"
+    exposedByDefault: false
+    network: "traefik-private"
+
+entryPoints:
+  web:
+    address: ":80"
+
+api:
+  dashboard: true

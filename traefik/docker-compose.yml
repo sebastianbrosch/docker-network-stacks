@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  traefik:
+    image: traefik:v2.9
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml
+    networks:
+      - traefik-public
+      - traefik-private
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik.rule=Host(`${SERVER_IP}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+        - "traefik.http.routers.traefik.service=api@internal"
+        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+        - "traefik.http.routers.traefik.middlewares=traefik-auth"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=traefik:$$apr1$$xsbajpu1$$ndC5sByKjMX8v8oa8jfNd0"
+      placement:
+        constraints:
+          - node.role == manager
+  docker-proxy:
+    image: tecnativa/docker-socket-proxy:0.1
+    ports:
+      - "2375:2375"
+    environment:
+      NETWORKS: 1
+      SERVICES: 1
+      TASKS: 1
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - traefik-private
+
+networks:
+  traefik-public:
+    external: true
+  traefik-private:
