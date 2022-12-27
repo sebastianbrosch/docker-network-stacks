@@ -15,11 +15,13 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.traefik.rule=Host(`${SERVER_IP}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+        - "traefik.http.routers.traefik.rule=Host(`${SERVER_IPV4}`) && (PathPrefix(`/api`) || PathPrefix(`/traefik`))"
         - "traefik.http.routers.traefik.service=api@internal"
         - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-        - "traefik.http.routers.traefik.middlewares=traefik-auth"
-        - "traefik.http.middlewares.traefik-auth.basicauth.users=traefik:$$apr1$$xsbajpu1$$ndC5sByKjMX8v8oa8jfNd0"
+        - "traefik.http.routers.traefik.middlewares=traefik-auth,traefik-strip,traefik-gzip"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=traefik:$$apr1$$4p61x3i2$$R2MNa4mcgVqhl9bLoJ1yI0"
+        - "traefik.http.middlewares.traefik-strip.stripprefix.prefixes=/traefik"
+        - "traefik.http.middlewares.traefik-gzip.compress=true"
       placement:
         constraints:
           - node.role == manager
