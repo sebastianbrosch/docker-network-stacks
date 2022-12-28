@@ -33,7 +33,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.grafana.rule=Host(`${SERVER_IP}`) && PathPrefix(`/grafana/`)"
+        - "traefik.http.routers.grafana.rule=Host(`${SERVER_IPV4}`) && PathPrefix(`/grafana/`)"
         - "traefik.http.services.grafana.loadbalancer.server.port=3000"
   speedtest:
     image: billimek/prometheus-speedtest-exporter:1.3.1
