@@ -27,7 +27,7 @@ if [[ $? > 0 ]]; then
 fi
 
 printf '%bRaspberry Pi%b\n' $BLUE $ENDCOLOR
-printf '    IP-Adresse (IPv4) [%s]: \033[s' $ipv4 
+printf '    IP-Adresse (IPv4) [%s]: \033[s' $ipv4
 read ip4
 ip4=${ip4:-${ipv4}}
 printf '\033[u%s\n' $ip4
@@ -83,7 +83,7 @@ if [[ ! $traefik =~ [YyJj] && ! $prometheus =~ [YyJj] && ! $pihole =~ [YyJj] ]];
 fi
 
 if [[ $traefik =~ [YyJj] ]]; then
-  printf '    Traefik wird installiert...%b' $RESET
+  printf '    Traefik is being installed...%b' $RESET
   bash traefik/install.sh > /dev/null 2>&1
   if [[ $(get_traefik_cnt) == 2 ]]; then
     printf '    %b[\u2714] Traefik wurde installiert.%b%b\n' $GREEN $ENDCOLOR $RESET
@@ -93,9 +93,9 @@ if [[ $traefik =~ [YyJj] ]]; then
 fi
 
 if [[ $prometheus =~ [YyJj] ]]; then
-  printf '    Prometheus (incl. Grafana) wird installiert...%b' $RESET
+  printf '    Prometheus (incl. Grafana) is being installed...%b' $RESET
   bash prometheus/install.sh > /dev/null 2>&1
-  if [[ $(get_prometheus_cnt) == 2 ]]; then
+  if [[ $(get_prometheus_cnt) == 3 ]]; then
     printf '    %b[\u2714] Prometheus (incl. Grafana) wurde installiert.%b%b\n' $GREEN $ENDCOLOR $RESET
   else
     printf '    %b[\u274c] Prometheus (incl. Grafana) wurde nicht installiert.%b%b\n' $RED $ENDCOLOR $RESET
@@ -103,15 +103,15 @@ if [[ $prometheus =~ [YyJj] ]]; then
 fi
 
 if [[ $pihole =~ [YyJj] ]]; then
-  printf '    Pi Hole wird installiert...%b' $RESET
+  printf '    Pi Hole is being installed...%b' $RESET
   bash pihole/install.sh > /dev/null 2>&1
-  if [[ $(get_prometheus_cnt) == 2 ]]; then
+  if [[ $(get_pihole_cnt) == 1 ]]; then
     printf '    %b[\u2714] Pi Hole wurde installiert.%b%b\n' $GREEN $ENDCOLOR $RESET
   else
     printf '    %b[\u274c] Pi Hole wurde nicht installiert.%b%b\n' $RED $ENDCOLOR $RESET
   fi
 fi
 
-printf '\n\nPress [Enter] key to exit the setup...'
+printf '\nPress [Enter] key to exit the setup...'
 read -p ""
 clear
