@@ -24,3 +24,14 @@ This stack enables the monitoring of network devices. This stack also includes a
 Pi-hole is an adblocker and DNS server. It can be used to block advertisements, telemetry and malicious websites throughout the network.
 
 Pi-hole is using the port 53 (UDP and TCP) of the host system.
+
+## Install
+### Install using git
+```
+git clone https://github.com/sebastianbrosch/docker-network-stacks
+```
+
+### Install using curl
+```
+curl https://github.com/sebastianbrosch/docker-network-stacks/archive/refs/heads/main.zip --output docker-network-stacks.zip
+```

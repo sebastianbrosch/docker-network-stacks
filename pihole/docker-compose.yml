@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   pihole:
-    image: pihole/pihole:2022.09.4
+    image: pihole/pihole:2022.12
     ports:
       - target: 53
         published: 53
@@ -17,7 +17,7 @@ services:
       - 8.8.8.8
     environment:
       TZ: 'Europe/Berlin'
-      WEBPASSWORD: 'G9IMXfI6b7IPS7LZes54'
+      WEBPASSWORD: '${WEBPASSWORD}'
       DNSSEC: 'true'
       DHCP_ACTIVE: 'false'
       WEBTHEME: 'default-dark'

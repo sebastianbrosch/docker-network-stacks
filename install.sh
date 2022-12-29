@@ -103,12 +103,11 @@ if [[ $prometheus =~ [YyJj] ]]; then
 fi
 
 if [[ $pihole =~ [YyJj] ]]; then
-  printf '    Pi Hole is being installed...%b' $RESET
-  bash pihole/install.sh > /dev/null 2>&1
+  bash pihole/install.sh
   if [[ $(get_pihole_cnt) == 1 ]]; then
-    printf '    %b[\u2714] Pi Hole wurde installiert.%b%b\n' $GREEN $ENDCOLOR $RESET
+    printf '    %b[\u2714] Pi Hole wurde installiert.%b\n' $GREEN $ENDCOLOR
   else
-    printf '    %b[\u274c] Pi Hole wurde nicht installiert.%b%b\n' $RED $ENDCOLOR $RESET
+    printf '    %b[\u274c] Pi Hole wurde nicht installiert.%b\n' $RED $ENDCOLOR
   fi
 fi
 
